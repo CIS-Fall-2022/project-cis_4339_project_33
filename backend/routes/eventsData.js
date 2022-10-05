@@ -38,6 +38,11 @@ router.get("/search/", (req, res, next) => {
         dbQuery = {
             date:  req.query["eventDate"]
         }
+    }
+      else if (req.query["searchBy"] === 'orgname') {
+        dbQuery = {
+            "orgName": { $regex: `^${req.query["orgName"]}`, $options: "i"}
+        }
     };
     eventdata.find( 
         dbQuery, 
@@ -117,11 +122,30 @@ router.put("/addAttendee/:id", (req, res, next) => {
                         }
                     );
                 }
-                
+                           else {
+                console.log('Already an attendee!');
+            }     
             }
         }
     );
     
 });
+
+//DELETE a event by ID
+router.delete('/id/:id', (req, res, next) => {
+    //mongoose will use _id of document
+    eventdata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+        }
+    });
+});
+
+
+
 
 module.exports = router;
