@@ -42,6 +42,11 @@ router.get("/search/", (req, res, next) => {
         dbQuery = {
             "phoneNumbers.primaryPhone": { $regex: `^${req.query["phoneNumbers.primaryPhone"]}`, $options: "i" }
         }
+    }
+      else if (req.query["searchBy"] === 'orgname'){
+        dbQuery = {
+            "orgName": { $regex: `^${req.query["orgName"]}`, $options: "i"}
+        }
     };
     primarydata.find( 
         dbQuery, 
@@ -90,6 +95,20 @@ router.put("/:id", (req, res, next) => {
             }
         }
     );
+});
+
+//DELETE client by id
+router.delete('/id/:id', (req, res, next) => {
+    //mongoose will use _id of document
+    primarydata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+        }
+    });
 });
 
 module.exports = router;
