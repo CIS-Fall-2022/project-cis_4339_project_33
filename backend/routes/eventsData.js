@@ -122,14 +122,14 @@ router.put("/addAttendee/:id", (req, res, next) => {
                         }
                     );
                 }
-                           else {
+            else {
                 console.log('User attempted to add client to an already enrolled event');
-            }     
+            }    
             }
         }
     );
     
-);
+});
 
 //DELETE a event by ID
 router.delete('/id/:id', (req, res, next) => {
@@ -143,7 +143,7 @@ router.delete('/id/:id', (req, res, next) => {
             });
         }
     });
-);
+});
 
 
 
