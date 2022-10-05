@@ -123,7 +123,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
                     );
                 }
                            else {
-                console.log('User attempted to add an existing client');
+                console.log('User attempted to add an existing client to an event');
             }     
             }
         }
