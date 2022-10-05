@@ -129,7 +129,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
         }
     );
     
-});
+);
 
 //DELETE a event by ID
 router.delete('/id/:id', (req, res, next) => {
@@ -143,7 +143,7 @@ router.delete('/id/:id', (req, res, next) => {
             });
         }
     });
-});
+);
 
 
 
