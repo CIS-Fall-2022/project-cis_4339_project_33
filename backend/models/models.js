@@ -84,7 +84,7 @@ let eventDataSchema = new Schema({
         type: String,
     },
     attendees: [{
-        type: String
+        type: [String]
     }],
     orgName: {
         type: String
