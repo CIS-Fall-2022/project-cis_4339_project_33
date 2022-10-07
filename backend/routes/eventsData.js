@@ -159,6 +159,19 @@ router.get('/attending/:id', (req, res, next) => {
     });
 });
 
-
+//attempt on setting up "last two months" query
+router.get("/eventstwomonths", (req, res, next) => { 
+    eventdata.find([
+        {$project : {"subtractedDate": new Date(new Date().setMonth(new Date().getMonth() - 2))}},
+    ], 
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    ).sort({ 'updatedAt': -1 }).limit(10);
+});
 
 module.exports = router;
