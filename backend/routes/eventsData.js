@@ -145,6 +145,19 @@ router.delete('/id/:id', (req, res, next) => {
     });
 });
 
+//get number of attendees for a specific event
+router.get('/attending/:id', (req, res, next) => {
+    eventdata.aggregate([
+      { $match : { _id : req.params.id } },
+      { $project : {attendees : {$size: "$attendees"}}},
+    ], (error, data) => {
+        if (error) {
+          return next(error)
+        } else {
+          res.json(data);
+        }
+    });
+});
 
 
 
