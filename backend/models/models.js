@@ -1,6 +1,7 @@
 const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const orgID = process.env.ORG_ID;
 
 //collection for intakeData
 let primaryDataSchema = new Schema({
@@ -41,8 +42,10 @@ let primaryDataSchema = new Schema({
             type: String,
         }
     },
-    orgName: {
-        type: String
+    organization: {
+        type: String,
+        default: orgID,
+        required: true
     }
 }, {
     collection: 'primaryData',
@@ -86,16 +89,29 @@ let eventDataSchema = new Schema({
     attendees: [{
         type: [String]
     }],
-    orgName: {
-        type: String
+    organization: {
+        type: String,
+        default: orgID,
+        required: true
     }
 }, {
     collection: 'eventData'
 });
 
+//collection for organization
+let orgDataSchema = new Schema({
+    _id: { type: String, default: uuid.v1 },
+    orgName: {
+        type: String
+    }
+}, {
+    collection: 'orgData'
+});
+
 // create models from mongoose schemas
 const primarydata = mongoose.model('primaryData', primaryDataSchema);
 const eventdata = mongoose.model('eventData', eventDataSchema);
+const orgdata = mongoose.model('orgData', orgDataSchema)
 
 // package the models in an object to export 
-module.exports = { primarydata, eventdata }
+module.exports = { primarydata, eventdata, orgdata }
