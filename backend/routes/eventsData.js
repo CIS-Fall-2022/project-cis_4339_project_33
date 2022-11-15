@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const orgID = process.env.ORG_ID; 
 
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    eventdata.find( 
+    eventdata.find(
+        {organization: orgID}, 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -19,7 +21,7 @@ router.get("/", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => { 
-    eventdata.find({ _id: req.params.id }, (error, data) => {
+    eventdata.find({ _id: req.params.id, organization: orgID }, (error, data) => {
         if (error) {
             return next(error)
         } else {
@@ -38,14 +40,10 @@ router.get("/search/", (req, res, next) => {
         dbQuery = {
             date:  req.query["eventDate"]
         }
-    }
-      else if (req.query["searchBy"] === 'orgname') {
-        dbQuery = {
-            "orgName": { $regex: `^${req.query["orgName"]}`, $options: "i"}
-        }
     };
     eventdata.find( 
-        dbQuery, 
+        dbQuery,
+        {organization: orgID}, 
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -59,7 +57,7 @@ router.get("/search/", (req, res, next) => {
 //GET events for which a client is signed up
 router.get("/client/:id", (req, res, next) => { 
     eventdata.find( 
-        { attendees: req.params.id }, 
+        { attendees: req.params.id, organization: orgID }, 
         (error, data) => { 
             if (error) {
                 return next(error);
