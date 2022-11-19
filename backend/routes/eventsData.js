@@ -158,6 +158,10 @@ router.get('/attending/:id', (req, res, next) => {
 });
 
 //Creating route that gets the past two months data of attendees being assigned to an event
+let today = new Date();
+today.setMonth(today.getMonth() - 2);
+let query = {date: {$gte:today}};
+
 router.get("/twoMonthsEvents", (req, res, next) => { 
     eventdata.find(query,  
         (error, data) => {
