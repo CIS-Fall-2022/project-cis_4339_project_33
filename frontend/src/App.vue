@@ -83,5 +83,6 @@ export default {
   background-color: #c8102e;
   color: white;
   padding: 18px;
+  height: auto;
 }
 </style>
