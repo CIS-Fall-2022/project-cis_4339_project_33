@@ -5,3 +5,24 @@
 button {
     padding: 10px;
 }
+table {
+    width:75%;
+    border-width: 20px;
+    border-style:double;
+    border-color:#de0d0d;
+    margin-left: auto;
+    margin-right: auto;
+}
+th {
+    border-color:#de0d0d;
+    border-width: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+td{
+    border-color:#de0d0d;
+    border-width: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
