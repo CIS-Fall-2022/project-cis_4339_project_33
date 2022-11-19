@@ -157,19 +157,30 @@ router.get('/attending/:id', (req, res, next) => {
     });
 });
 
-//attempt on setting up "last two months" query
-router.get("/eventstwomonths", (req, res, next) => { 
-    eventdata.find([
-        {$project : {"subtractedDate": new Date(new Date().setMonth(new Date().getMonth() - 2))}},
-    ], 
+//Creating route that gets the past two months data of attendees being assigned to an event
+router.get("/twoMonthsEvents", (req, res, next) => { 
+    eventdata.find(query,  
         (error, data) => {
             if (error) {
                 return next(error);
             } else {
-                res.json(data);
+                if (data.length >= 0) {
+                    eventdata.aggregate([
+                        {$group: { _id: "$eventName", totalSize: { $sum: { $size: "$attendees"} } } } 
+                ], (error, data) => {
+                    if (error) {
+            
+                      return next(error)
+            
+                    } else {
+                        res.json(data);
+            
+                        }
+            
+                    })
+                }
             }
-        }
-    ).sort({ 'updatedAt': -1 }).limit(10);
-});
+            })
+        });
 
 module.exports = router;
