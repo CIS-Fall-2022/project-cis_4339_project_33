@@ -1,10 +1,11 @@
 
 <template>
-  <canvas ref="myChart"></canvas>
+  <canvas ref="myChart" style = "margin-left:100px; margin-right:100px; margin-bottom:30px;" ></canvas>
 </template>
 
 <script>
 import { Chart, registerables } from 'chart.js'
+
 
 Chart.register(...registerables);
 export default {
@@ -24,9 +25,9 @@ export default {
         labels: this.label,
         datasets: [
           {
-            label: "Clients per Event",
+            label: "Attendance per Event",
             data: this.chartData,
-            backgroundColor: "rgba(144,238,144 , 0.9 )",
+            backgroundColor: "#CC003399",
 
           },
         ],
@@ -34,12 +35,10 @@ export default {
       options: {
         responsive: true,
         scale: {
-          yAxes: [{
-            ticks: {
-                fixedStepSize: 1
-            }
-        }],
-        }
+         
+               max: 20,
+        },
+        maintainAspectRatio: true,
       }
       
     });
