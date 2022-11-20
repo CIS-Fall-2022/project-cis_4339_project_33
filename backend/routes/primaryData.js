@@ -97,6 +97,8 @@ router.delete('/id/:id', (req, res, next) => {
         if (error) {
             return next(error);
         } else {
+            //Function will delete client from event 
+            eventdata.updateMany({}, {$pull: {attendees: req.params.id}}).exec()
             res.status(200).json({
                 msg: data
             });
