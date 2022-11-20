@@ -158,33 +158,29 @@ router.get('/attending/:id', (req, res, next) => {
 });
 
 //Creating route that gets the past two months data of attendees being assigned to an event
-let today = new Date();
-today.setMonth(today.getMonth() - 2);
-let query = {date: {$gte:today}};
+//Should return chart based on current organization
 
 router.get("/twoMonthsEvents", (req, res, next) => { 
-    eventdata.find(query,  
-        (error, data) => {
+    let today = new Date();
+    today.setMonth(today.getMonth() - 2);
+    let query = {date: {$gte:today}};
+    eventdata.aggregate([
+    {$match: {organization:process.env.ORG_ID}},
+    {$project: { _id: "$eventName", totalSize: { $size:{$ifNull: ["$attendees", []]} } } },
+    ],
+     (error, data) => {
             if (error) {
-                return next(error);
+            
+            return next(error);
+            
             } else {
-                if (data.length >= 0) {
-                    eventdata.aggregate([
-                        {$group: { _id: "$eventName", totalSize: { $sum: { $size: "$attendees"} } } } 
-                ], (error, data) => {
-                    if (error) {
+            res.json(data);
             
-                      return next(error)
-            
-                    } else {
-                        res.json(data);
-            
-                        }
-            
-                    })
-                }
             }
-            })
-        });
+            
+                    }
+                    ).sort({"date": -1});
+                });
+
 
 module.exports = router;
