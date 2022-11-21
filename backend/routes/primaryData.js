@@ -98,6 +98,8 @@ router.delete('/id/:id', (req, res, next) => {
             return next(error);
         } else {
             //Function will delete client from event 
+            //https://www.mongodb.com/docs/manual/reference/operator/update/pull/
+            //https://www.mongodb.com/docs/manual/reference/method/db.collection.updateMany/
             eventdata.updateMany({}, {$pull: {attendees: req.params.id}}).exec()
             res.status(200).json({
                 msg: data
