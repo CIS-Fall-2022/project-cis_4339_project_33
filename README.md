@@ -26,3 +26,18 @@ We decided to structure our database model to have the "organization name" embed
 
 Previously the code provided to us, handled errors on the frontend within the browser console. We implemented changes in the backend, which will notify the developer of errors that occur on the client-side.
 
+
+## Frontend Start Up Directions
+
+1. Switch orgainiations (if needed)
+2. Create a new terminal
+3. cd frontend
+4. npm install (if needed)
+5. npm run dev
+6. Copy url link and paste in web browser
+
+## How to switch organizations
+
+In the backend .env file, switch organizations by uncommenting or commenting the specified orgainzation you want to use. In the frontend .env file, switch to the corresponding port number used in the backend .env file. 
+
+
