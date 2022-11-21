@@ -104,7 +104,7 @@ export default {
         });
       });
     },
-    //TODO: i need to make this delete through all the event documents
+    //Hard delete functionality
     handleClientDelete() {
       let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/id/${this.id}`;
       axios.delete(apiURL, this.client).then(() => {
@@ -114,6 +114,7 @@ export default {
         });
       });
     },
+    //Button functionality to add to event
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
