@@ -159,16 +159,15 @@ router.get('/attending/:id', (req, res, next) => {
 
 //Creating route that gets the past two months data of attendees being assigned to an event
 //Should return chart based on current organization
-                
-                
+//https://stackoverflow.com/questions/55467173/mongodb-sum-of-array-lengths-and-missing-fields
+//Used the the link above to figure out how to utilize $size correctly
+                              
 router.get("/twoMonthsEvents", (req, res, next) => {
     let today = new Date();
     today.setMonth(today.getMonth() - 2);
                     
     eventdata.aggregate([
-        {$match: {organization:process.env.ORG_ID, date:{$gte:today}}},
-        //https://stackoverflow.com/questions/55467173/mongodb-sum-of-array-lengths-and-missing-fields
-        //Used the the link above to figure out how to utilize $size correctly
+        {$match: {organization:orgID, date:{$gte:today}}},
         {$project: { _id: "$eventName", totalSize: { $size:{$ifNull: ["$attendees", []]} } } } 
         ], 
         (error, data) => {
@@ -178,8 +177,7 @@ router.get("/twoMonthsEvents", (req, res, next) => {
             else {
                 res.json(data);
                                 
-            }
-         //sort the events in descending order                      
+            }                    
         }).sort({"date": -1});
     });
 
