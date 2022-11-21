@@ -167,6 +167,8 @@ router.get("/twoMonthsEvents", (req, res, next) => {
                     
     eventdata.aggregate([
         {$match: {organization:process.env.ORG_ID, date:{$gte:today}}},
+        //https://stackoverflow.com/questions/55467173/mongodb-sum-of-array-lengths-and-missing-fields
+        //Used the the link above to figure out how to utilize $size correctly
         {$project: { _id: "$eventName", totalSize: { $size:{$ifNull: ["$attendees", []]} } } } 
         ], 
         (error, data) => {
@@ -177,7 +179,7 @@ router.get("/twoMonthsEvents", (req, res, next) => {
                 res.json(data);
                                 
             }
-                                
+         //sort the events in descending order                      
         }).sort({"date": -1});
     });
 
