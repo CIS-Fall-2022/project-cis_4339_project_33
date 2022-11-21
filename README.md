@@ -40,4 +40,19 @@ Previously the code provided to us, handled errors on the frontend within the br
 
 In the backend .env file, switch organizations by uncommenting or commenting the specified orgainzation you want to use. In the frontend .env file, switch to the corresponding port number used in the backend .env file. 
 
+## Backend
+
+Example:
+```
+MONGO_URL = mongodb+srv://mongo:mongo123@cluster0.laovveb.mongodb.net/test
+ORG_ID = 7adcc4b0-6485-11ed-bccf-8571d2228a19
+PORT = 3000
+```
+
+## Frontend
+
+Example:
+```
+VITE_ROOT_API=http://localhost:3000
+```
 
