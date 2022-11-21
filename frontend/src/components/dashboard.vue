@@ -103,8 +103,8 @@ methods: {
     try {
       this.error = null;
       this.loading = true;
-      const url = `http://localhost:3000/eventData/twoMonthsEvents`;
-      const response = await axios.get(url);
+      const apiURL = import.meta.env.VITE_ROOT_API + `/eventData/twoMonthsEvents`;
+      const response = await axios.get(apiURL);
       //"re-organizing" - mapping json from the response
 
       this.labels = response.data.map((item) => item._id);
