@@ -29,7 +29,7 @@ Previously the code provided to us, handled errors on the frontend within the br
 
 ## Frontend Start Up Directions
 
-1. Switch orgainiations (if needed)
+1. Switch organization (if needed)
 2. Create a new terminal
 3. cd frontend
 4. npm install (if needed)
