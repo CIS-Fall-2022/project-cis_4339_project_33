@@ -3,10 +3,10 @@ const router = express.Router();
 const orgID = process.env.ORG_ID; 
 
 //importing data model schemas
+router.get("/", (req, res, next) => { 
 let { eventdata } = require("../models/models"); 
 
 //GET all entries
-router.get("/", (req, res, next) => { 
     eventdata.find(
         {organization: orgID}, 
         (error, data) => {
@@ -159,28 +159,27 @@ router.get('/attending/:id', (req, res, next) => {
 
 //Creating route that gets the past two months data of attendees being assigned to an event
 //Should return chart based on current organization
-
-router.get("/twoMonthsEvents", (req, res, next) => { 
+                
+                
+router.get("/twoMonthsEvents", (req, res, next) => {
     let today = new Date();
     today.setMonth(today.getMonth() - 2);
-    let query = {date: {$gte:today}};
+                    
     eventdata.aggregate([
-    {$match: {organization:process.env.ORG_ID}},
-    {$project: { _id: "$eventName", totalSize: { $size:{$ifNull: ["$attendees", []]} } } },
-    ],
-     (error, data) => {
-            if (error) {
-            
-            return next(error);
-            
-            } else {
-            res.json(data);
-            
+        {$match: {organization:process.env.ORG_ID, date:{$gte:today}}},
+        {$project: { _id: "$eventName", totalSize: { $size:{$ifNull: ["$attendees", []]} } } } 
+        ], 
+        (error, data) => {
+            if (error) {                   
+                return next(error)
+            } 
+            else {
+                res.json(data);
+                                
             }
-            
-                    }
-                    ).sort({"date": -1});
-                });
+                                
+        }).sort({"date": -1});
+    });
 
 
 module.exports = router;
