@@ -69,7 +69,7 @@ export default {
     }
   },
   mounted() {
-    let apiURL = import.meta.env.VITE_ROOT_API + `/orgdata/id`;
+    let apiURL = import.meta.env.VITE_ROOT_API + `/orgdata/id`; //API to get organization name to display on frontend
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
     });
